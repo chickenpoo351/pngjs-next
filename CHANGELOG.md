@@ -1,5 +1,23 @@
 # Changelog
 
+## pngjs-next
+
+### 8.0.0.alpha.0
+
+- Initial fork of pngjs.
+- Project renamed to pngjs-next.
+- Repository migrated to a new home.
+- README update added.
+- yarn package manager removed and replace with pnpm.
+
+---
+
+### Historical pngjs Changelog
+
+The entries below are preserved from the original **pngjs** project and document releases prior to the creation of **pngjs-next**.
+
+---
+
 ### 7.0.0 - 19/02/2023
 
 - BREAKING - Drop support for node 12 (Though nothing incompatible in this release yet)

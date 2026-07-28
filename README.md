@@ -1,4 +1,6 @@
-![build](https://github.com/pngjs/pngjs/actions/workflows/ci.yml/badge.svg?branch=main) [![codecov](https://codecov.io/gh/pngjs/pngjs/branch/master/graph/badge.svg)](https://codecov.io/gh/pngjs/pngjs) [![npm version](https://badge.fury.io/js/pngjs.svg)](http://badge.fury.io/js/pngjs)
+> Important!
+
+I am going to be refactoring this project and doing a ton of stuff to it as of right now it contains pngjs's old README but once this project reaches a reasonable state this README (as well as a plethora of things...) will be updated to reflect this
 
 # pngjs
 

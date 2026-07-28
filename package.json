@@ -1,7 +1,8 @@
 {
-  "name": "pngjs",
-  "version": "7.0.0",
-  "description": "PNG encoder/decoder in pure JS, supporting any bit size & interlace, async & sync with full test suite.",
+  "name": "pngjs-next",
+  "version": "8.0.0.alpha.0",
+  "description": "Modern continuation of pngjs",
+  "author": "chickenpoo",
   "contributors": [
     "Alexandre Paré",
     "Gaurav Mali",
@@ -16,7 +17,7 @@
     "toriningen",
     "Eugene Kulabuhov"
   ],
-  "homepage": "https://github.com/pngjs/pngjs",
+  "homepage": "https://github.com/chickenpoo351/pngjs",
   "keywords": [
     "PNG",
     "decoder",
@@ -43,22 +44,22 @@
     "lib/"
   ],
   "scripts": {
-    "build": "yarn prepublish",
-    "prepublish": "yarn browserify",
+    "build": "pnpm prepublish",
+    "prepublish": "pnpm browserify",
     "browserify": "browserify lib/png.js --standalone png > browser.js",
     "coverage": "nyc --reporter=lcov --reporter=text-summary tape test/*-spec.js",
-    "test": "yarn lint && yarn prettier:check && tape test/*-spec.js | tap-dot && node test/run-compare",
+    "test": "pnpm lint && pnpm prettier:check && tape test/*-spec.js | tap-dot && node test/run-compare",
     "lint": "eslint .",
     "prettier:write": "prettier --write .",
     "prettier:check": "prettier --check ."
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/pngjs/pngjs.git"
+    "url": "https://github.com/chickenpoo351/pngjs-next.git"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/pngjs/pngjs/issues"
+    "url": "https://github.com/chickenpoo351/pngjs-next/issues"
   },
   "devDependencies": {
     "browserify": "17.0.0",
@@ -72,5 +73,6 @@
     "serve-static": "1.15.0",
     "tap-dot": "2.0.0",
     "tape": "5.6.3"
-  }
+  },
+  "packageManager": "pnpm@10.7.1"
 }
