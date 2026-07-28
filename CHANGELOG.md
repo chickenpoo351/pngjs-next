@@ -1,6 +1,6 @@
 # Changelog
 
-## pngjs-next
+## pngjs-nextgen
 
 ### 8.0.0.alpha.0
 
@@ -14,7 +14,7 @@
 
 ### Historical pngjs Changelog
 
-The entries below are preserved from the original **pngjs** project and document releases prior to the creation of **pngjs-next**.
+The entries below are preserved from the original **pngjs** project and document releases prior to the creation of **pngjs-nextgen**.
 
 ---
 
