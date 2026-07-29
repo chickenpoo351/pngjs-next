@@ -47,8 +47,8 @@
     "build": "pnpm prepublish",
     "prepublish": "pnpm browserify",
     "browserify": "browserify lib/png.js --standalone png > browser.js",
-    "coverage": "nyc --reporter=lcov --reporter=text-summary tape test/*-spec.js",
-    "test": "pnpm lint && pnpm prettier:check && tape test/*-spec.js | tap-dot && node test/run-compare",
+    "coverage": "vitest run --coverage",
+    "test": "pnpm lint && pnpm prettier:check && vitest run",
     "lint": "eslint .",
     "prettier:write": "prettier --write .",
     "prettier:check": "prettier --check ."
@@ -62,17 +62,15 @@
     "url": "https://github.com/chickenpoo351/pngjs-nextgen/issues"
   },
   "devDependencies": {
+    "@vitest/coverage-v8": "^4.1.10",
     "browserify": "17.0.0",
     "buffer-equal": "1.0.1",
     "connect": "3.7.0",
     "eslint": "8.39.0",
     "eslint-config-prettier": "8.8.0",
-    "nyc": "15.1.0",
     "prettier": "2.8.8",
     "puppeteer": "19.7.1",
     "serve-static": "1.15.0",
-    "tap-dot": "2.0.0",
-    "tape": "5.6.3",
     "vitest": "^4.1.10"
   },
   "packageManager": "pnpm@10.7.1"
