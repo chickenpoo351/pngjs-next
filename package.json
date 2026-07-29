@@ -17,7 +17,7 @@
     "toriningen",
     "Eugene Kulabuhov"
   ],
-  "homepage": "https://github.com/chickenpoo351/pngjs",
+  "homepage": "https://github.com/chickenpoo351/pngjs-nextgen",
   "keywords": [
     "PNG",
     "decoder",
@@ -55,11 +55,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/chickenpoo351/pngjs-next.git"
+    "url": "https://github.com/chickenpoo351/pngjs-nextgen.git"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/chickenpoo351/pngjs-next/issues"
+    "url": "https://github.com/chickenpoo351/pngjs-nextgen/issues"
   },
   "devDependencies": {
     "browserify": "17.0.0",

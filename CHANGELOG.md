@@ -2,10 +2,10 @@
 
 ## pngjs-nextgen
 
-### 8.0.0.alpha.0
+### 7.0.0
 
 - Initial fork of pngjs.
-- Project renamed to pngjs-next.
+- Project renamed to pngjs-nextgen.
 - Repository migrated to a new home.
 - README update added.
 - yarn package manager removed and replace with pnpm.
