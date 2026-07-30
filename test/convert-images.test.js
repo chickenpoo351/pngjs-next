@@ -3,6 +3,9 @@
 // something is happening... not sure exactly what but setting the vite config to use 1
 // worker seems to fix it? (granted now that means tests will run a bit slower...)
 
+// update: I still can't figure out why this fails :p it just appears to be random at this point
+// if there are any png wizards out there this would be a great place to try to figure out
+// what is happening
 import fs from "node:fs";
 import { describe, expect, test } from "vitest";
 import { PNG } from "../lib/png.js";

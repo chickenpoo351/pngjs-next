@@ -48,7 +48,7 @@
     "prepublish": "pnpm browserify",
     "browserify": "browserify lib/png.js --standalone png > browser.js",
     "coverage": "vitest run --coverage",
-    "test": "pnpm lint && pnpm prettier:check && vitest run",
+    "test": "pnpm lint && pnpm format:check && vitest run",
     "lint": "oxlint .",
     "format": "dprint fmt",
     "format:check": "dprint check"

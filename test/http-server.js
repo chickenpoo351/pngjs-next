@@ -1,5 +1,5 @@
-import { createServer } from "node:http";
 import fs from "node:fs";
+import { createServer } from "node:http";
 
 const MIME_TYPES = {
   ".html": "text/html",
