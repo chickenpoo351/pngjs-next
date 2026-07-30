@@ -1,16 +1,30 @@
-let serveStatic = require("serve-static");
-let http = require("http");
-let connect = require("connect");
+import { createServer } from "node:http";
+import fs from "node:fs";
 
-let app = connect();
-let server = http.createServer(app);
+const MIME_TYPES = {
+  ".html": "text/html",
+  ".js": "text/javascript",
+  ".css": "text/css",
+  ".png": "image/png",
+};
 
-app.use(serveStatic("test"));
+const server = createServer(async (req, res) => {
+  const file = req.url === "/" ? "test/index.html" : `test${new URL(req.url, "http://localhost").pathname}`;
+
+  try {
+    const data = await fs.promises.readFile(file);
+
+    res.writeHead(200, {
+      "Content-Type": MIME_TYPES[file.slice(file.lastIndexOf("."))] ?? "application/octet-stream",
+    });
+
+    res.end(data);
+  } catch {
+    res.writeHead(404);
+    res.end();
+  }
+});
 
 server.listen(8000);
 
-module.exports = () => {
-  server.close();
-};
-
-console.log("Tests available at http://localhost:8000/");
+export default () => server.close();
