@@ -67,7 +67,7 @@
     "connect": "3.7.0",
     "dprint": "^0.55.2",
     "oxlint": "^1.76.0",
-    "puppeteer": "19.7.1",
+    "puppeteer": "25.4.0",
     "serve-static": "1.15.0",
     "vitest": "^4.1.10"
   },
