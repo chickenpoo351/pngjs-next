@@ -8,7 +8,7 @@ function parseFile(filename) {
     fs.createReadStream(new URL(`./png-parse-data/${filename}`, import.meta.url))
       .pipe(new PNG())
       .once("error", reject)
-      .once("parsed", function () {
+      .once("parsed", function() {
         resolve(this);
       });
   });
@@ -22,7 +22,7 @@ function parseBuffer(buffer) {
     bufferStream
       .pipe(new PNG())
       .once("error", reject)
-      .once("parsed", function () { // was this a typo? it was set to "parse" instead of "parsed" which for whatever reason worked...
+      .once("parsed", function() { // was this a typo? it was set to "parse" instead of "parsed" which for whatever reason worked...
         resolve(this);
       });
   });
@@ -72,30 +72,30 @@ test("should correctly parse an 8-bit truecolor png", async () => {
 
   expect(png.width).toBe(16);
   expect(png.height).toBe(16);
-  //expect(png.bpp).toBe(3);
+  // expect(png.bpp).toBe(3);
   expect(png.data.length).toBe(16 * 16 * 4);
 
   for (let y = 15; y >= 0; y--) {
     for (let x = 15; x >= 0; x--) {
       expect(getPixel(png, x, y)).toBe(
-        x * 285212672 + y * 1114112 + (x ^ y) * 4352 + 255
+        x * 285212672 + y * 1114112 + (x ^ y) * 4352 + 255,
       );
     }
   }
 });
 
 test("should correctly parse an 8-bit truecolor png with alpha", async () => {
-  const png = await parseFile("truecoloralpha.png")
+  const png = await parseFile("truecoloralpha.png");
   expect(png.width).toBe(16);
   expect(png.height).toBe(16);
-  //t.equal(png.bpp, 4);
+  // t.equal(png.bpp, 4);
   expect(png.data.length).toBe(16 * 16 * 4);
-  //t.equal(png.trailer.length, 0);
+  // t.equal(png.trailer.length, 0);
 
   for (let y = 15; y >= 0; y--) {
     for (let x = 15; x >= 0; x--) {
       expect(getPixel(png, x, y)).toBe(
-        x * 285212672 + y * 1114112 + (x ^ y) * 17
+        x * 285212672 + y * 1114112 + (x ^ y) * 17,
       );
     }
   }
@@ -106,9 +106,9 @@ test("should correctly read image with scanline filter", async () => {
 
   expect(png.width).toBe(1024);
   expect(png.height).toBe(1024);
-  //expect(png.bpp).toBe(3);
+  // expect(png.bpp).toBe(3);
   expect(png.data.length).toBe(1024 * 1024 * 4);
-  //expect(png.trailer.length).toBe(0);
+  // expect(png.trailer.length).toBe(0);
 
   expect(getPixel(png, 0, 0)).toBe(0xff0000ff);
   expect(getPixel(png, 1, 0)).toBe(0xff0000ff);
@@ -123,9 +123,9 @@ test("should correctly read an indexed color image", async () => {
 
   expect(png.width).toBe(16);
   expect(png.height).toBe(16);
-  //expect(png.bpp).toBe(3);
+  // expect(png.bpp).toBe(3);
   expect(png.data.length).toBe(16 * 16 * 4);
-  //expect(png.trailer.length).toBe(0);
+  // expect(png.trailer.length).toBe(0);
 
   for (let y = 15; y >= 0; y--) {
     for (let x = 15; x >= 0; x--) {
@@ -149,9 +149,9 @@ test("should correctly read an indexed color image with alpha", async () => {
 
   expect(png.width).toBe(16);
   expect(png.height).toBe(16);
-  //expect(png.bpp).toBe(4);
+  // expect(png.bpp).toBe(4);
   expect(png.data.length).toBe(16 * 16 * 4);
-  //expect(png.trailer.length).toBe(0);
+  // expect(png.trailer.length).toBe(0);
 
   for (let y = 15; y >= 0; y--) {
     for (let x = 15; x >= 0; x--) {
@@ -173,10 +173,10 @@ test("should correctly read an indexed color image with alpha", async () => {
 });
 
 test("should correctly support crazily-filtered images", async () => {
-  const png = await parseFile("paeth.png")
+  const png = await parseFile("paeth.png");
   expect(png.width).toBe(512);
   expect(png.height).toBe(512);
-  //expect(png.bpp).toBe(4);
+  // expect(png.bpp).toBe(4);
   expect(png.data.length).toBe(512 * 512 * 4);
 
   expect(getPixel(png, 0, 0)).toBe(0xff000000);
@@ -236,7 +236,7 @@ test("should bail with an error given a truncated PNG", async () => {
 test("should return an error if a PNG is normal except for a missing IEND", async () => {
   const buf = Buffer.from(
     "89504e470d0a1a0a0000000d49484452000000100000001008000000003a98a0bd000000017352474200aece1ce90000002174455874536f6674776172650047726170686963436f6e7665727465722028496e74656c297787fa190000008849444154789c448e4111c020100363010b58c00216b080052c60010b58c0c259c00216ae4d3b69df99dd0d1062caa5b63ee6b27d1c012996dceae86b6ef38398106acb65ae3e8edbbef780564b5e73743fdb409e1ef2f4803c3de4e901797ac8d3f3f0f490a7077ffffd03f5f507eaeb0fd4d71fa8af3f505f7fa0befe7c7dfdb9000000ffff0300c0fd7f8179301408",
-    "hex"
+    "hex",
   );
 
   await expect(parseBuffer(buf)).rejects.toBeInstanceOf(Error);
@@ -262,6 +262,6 @@ test("should parse with low highWaterMark", async () => {
         .pipe(new PNG())
         .once("parsed", resolve)
         .once("error", reject);
-    })
+    }),
   ).resolves.toBeDefined();
 });

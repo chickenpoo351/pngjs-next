@@ -83,9 +83,9 @@ fs.createReadStream("in.png")
   .pipe(
     new PNG({
       filterType: 4,
-    })
+    }),
   )
-  .on("parsed", function () {
+  .on("parsed", function() {
     for (var y = 0; y < this.height; y++) {
       for (var x = 0; x < this.width; x++) {
         var idx = (this.width * y + x) << 2;
@@ -165,7 +165,7 @@ Returns `this` for method chaining.
 #### Example
 
 ```js
-new PNG({ filterType: 4 }).parse(imageData, function (error, data) {
+new PNG({ filterType: 4 }).parse(imageData, function(error, data) {
   console.log(error, data);
 });
 ```
@@ -188,7 +188,7 @@ For example, the following code copies the top-left 100x50 px of `in.png` into d
 var dst = new PNG({ width: 100, height: 50 });
 fs.createReadStream("in.png")
   .pipe(new PNG())
-  .on("parsed", function () {
+  .on("parsed", function() {
     this.bitblt(dst, 0, 0, 100, 50, 0, 0);
     dst.pack().pipe(fs.createWriteStream("out.png"));
   });
@@ -205,7 +205,7 @@ The following example reads a file, adjusts the gamma (which sets the gamma to 0
 ```js
 fs.createReadStream("in.png")
   .pipe(new PNG())
-  .on("parsed", function () {
+  .on("parsed", function() {
     this.adjustGamma();
     this.pack().pipe(fs.createWriteStream("out.png"));
   });
@@ -246,9 +246,9 @@ fs.createReadStream("in.png")
         green: 255,
         blue: 0,
       },
-    })
+    }),
   )
-  .on("parsed", function () {
+  .on("parsed", function() {
     this.pack().pipe(fs.createWriteStream("out.png"));
   });
 ```

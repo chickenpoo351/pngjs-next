@@ -3,7 +3,7 @@ let fs = require("fs"),
 
 fs.createReadStream("test/in/basi0g01.png")
   .pipe(new PNG({}))
-  .on("parsed", function () {
+  .on("parsed", function() {
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
         let idx = (this.width * y + x) << 2;

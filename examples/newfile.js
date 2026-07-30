@@ -7,8 +7,7 @@ for (let y = 0; y < newfile.height; y++) {
   for (let x = 0; x < newfile.width; x++) {
     let idx = (newfile.width * y + x) << 2;
 
-    let col =
-      (x < newfile.width >> 1) ^ (y < newfile.height >> 1) ? 0xe5 : 0xff;
+    let col = (x < newfile.width >> 1) ^ (y < newfile.height >> 1) ? 0xe5 : 0xff;
 
     newfile.data[idx] = col;
     newfile.data[idx + 1] = col;
@@ -20,6 +19,6 @@ for (let y = 0; y < newfile.height; y++) {
 newfile
   .pack()
   .pipe(fs.createWriteStream(__dirname + "/newfile.png"))
-  .on("finish", function () {
+  .on("finish", function() {
     console.log("Written!");
   });

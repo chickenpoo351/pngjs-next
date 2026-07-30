@@ -1,11 +1,11 @@
 // so for some reason this file fails a single test if you run simply `pnpm vitest`
 // as for why? my theory is it is a parallelism thing with vite running all the tests at once
-// something is happening... not sure exactly what but setting the vite config to use 1 
+// something is happening... not sure exactly what but setting the vite config to use 1
 // worker seems to fix it? (granted now that means tests will run a bit slower...)
 
 import fs from "node:fs";
-import { PNG } from "../lib/png.js";
 import { describe, expect, test } from "vitest";
+import { PNG } from "../lib/png.js";
 
 const inDir = new URL("./in/", import.meta.url);
 const outDir = new URL("./out/", import.meta.url);
@@ -57,7 +57,7 @@ describe("image conversion", () => {
               reject(err);
             }
           })
-          .on("parsed", function () {
+          .on("parsed", function() {
             if (expectedError) {
               reject(new Error(`Async: Error expected, parsed fine - ${file}`));
               return;
@@ -70,4 +70,4 @@ describe("image conversion", () => {
       });
     }, 1000 * 60 * 5);
   }
-})
+});

@@ -1,5 +1,5 @@
 import fs from "node:fs";
-import { test, expect } from "vitest";
+import { expect, test } from "vitest";
 import { PNG } from "../lib/png.js";
 
 test("outputs background, created from scratch", async () => {
@@ -13,8 +13,8 @@ test("outputs background, created from scratch", async () => {
     for (let x = 0; x < png.width; x++) {
       const idx = (png.width * y + x) << 2;
       const col = (x < (png.width >> 1)) ^ (y < (png.height >> 1))
-          ? 0xe5
-          : 0xff;
+        ? 0xe5
+        : 0xff;
       png.data[idx] = col;
       png.data[idx + 1] = col;
       png.data[idx + 2] = col;
@@ -30,10 +30,10 @@ test("outputs background, created from scratch", async () => {
       .on("data", (chunk) => chunks.push(chunk))
       .on("end", () => resolve(Buffer.concat(chunks)))
       .on("error", reject);
-  });  
+  });
 
   const reference = fs.readFileSync(
-    new URL("./bg-ref.png", import.meta.url)
+    new URL("./bg-ref.png", import.meta.url),
   );
 
   expect(output.equals(reference)).toBe(true);

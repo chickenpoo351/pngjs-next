@@ -49,9 +49,9 @@
     "browserify": "browserify lib/png.js --standalone png > browser.js",
     "coverage": "vitest run --coverage",
     "test": "pnpm lint && pnpm prettier:check && vitest run",
-    "lint": "eslint .",
-    "prettier:write": "prettier --write .",
-    "prettier:check": "prettier --check ."
+    "lint": "oxlint .",
+    "format": "dprint fmt",
+    "format:check": "dprint check"
   },
   "repository": {
     "type": "git",
@@ -66,9 +66,8 @@
     "browserify": "17.0.0",
     "buffer-equal": "1.0.1",
     "connect": "3.7.0",
-    "eslint": "8.39.0",
-    "eslint-config-prettier": "8.8.0",
-    "prettier": "2.8.8",
+    "dprint": "^0.55.2",
+    "oxlint": "^1.76.0",
     "puppeteer": "19.7.1",
     "serve-static": "1.15.0",
     "vitest": "^4.1.10"

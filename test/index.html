@@ -3,24 +3,24 @@
   <head>
     <title>PNG Test</title>
     <style>
-      body {
-        background: #eee;
-        font: 12px Arial;
-        margin: 10px;
-      }
-      img {
-        margin: 2px;
-        background: url(bg.png);
-      }
-      h3 {
-        margin: 10px 0;
-      }
-      .success {
-        background: green;
-      }
-      .failure {
-        background: red;
-      }
+    body {
+      background: #eee;
+      font: 12px Arial;
+      margin: 10px;
+    }
+    img {
+      margin: 2px;
+      background: url(bg.png);
+    }
+    h3 {
+      margin: 10px 0;
+    }
+    .success {
+      background: green;
+    }
+    .failure {
+      background: red;
+    }
     </style>
   </head>
   <body>
@@ -901,99 +901,99 @@
       <img class="syncimage" src="outsync/gh-21.png" />
     </p>
     <script>
-      if (!Function.prototype.bind) {
-        Function.prototype.bind = function (oThis) {
-          if (typeof this !== "function") {
-            // closest thing possible to the ECMAScript 5
-            // internal IsCallable function
-            throw new TypeError(
-              "Function.prototype.bind - what is trying to be bound is not callable"
+    if (!Function.prototype.bind) {
+      Function.prototype.bind = function(oThis) {
+        if (typeof this !== "function") {
+          // closest thing possible to the ECMAScript 5
+          // internal IsCallable function
+          throw new TypeError(
+            "Function.prototype.bind - what is trying to be bound is not callable",
+          );
+        }
+
+        var aArgs = Array.prototype.slice.call(arguments, 1),
+          fToBind = this,
+          fNOP = function() {},
+          fBound = function() {
+            return fToBind.apply(
+              this instanceof fNOP ? this : oThis,
+              aArgs.concat(Array.prototype.slice.call(arguments)),
             );
-          }
+          };
 
-          var aArgs = Array.prototype.slice.call(arguments, 1),
-            fToBind = this,
-            fNOP = function () {},
-            fBound = function () {
-              return fToBind.apply(
-                this instanceof fNOP ? this : oThis,
-                aArgs.concat(Array.prototype.slice.call(arguments))
-              );
-            };
+        fNOP.prototype = this.prototype;
+        fBound.prototype = new fNOP();
 
-          fNOP.prototype = this.prototype;
-          fBound.prototype = new fNOP();
-
-          return fBound;
-        };
-      }
+        return fBound;
+      };
+    }
     </script>
     <script src="imagediff.js"></script>
     <script>
-      function waitForImages(images, fnCallback) {
-        setTimeout(function () {
-          for (var i = 0; i < images.length; i++) {
-            if (!images[i].complete) {
-              waitForImages(images, fnCallback);
-              return;
+    function waitForImages(images, fnCallback) {
+      setTimeout(function() {
+        for (var i = 0; i < images.length; i++) {
+          if (!images[i].complete) {
+            waitForImages(images, fnCallback);
+            return;
+          }
+        }
+        fnCallback();
+      }, 10);
+    }
+
+    window.isFinished = function() {
+      return testCount && testsDone === testCount;
+    };
+    window.results = [];
+
+    var testLines = document.getElementsByClassName("testline");
+    var testCount = testLines.length,
+      testsDone = 0;
+    for (var i = 0; i < testLines.length; i++) {
+      var testLine = testLines[i];
+      var inImage = testLine.getElementsByClassName("inimage")[0];
+      var asyncImage = testLine.getElementsByClassName("asyncimage")[0];
+      var syncImage = testLine.getElementsByClassName("syncimage")[0];
+      waitForImages(
+        [inImage, asyncImage, syncImage],
+        function(inImage, asyncImage, syncImage, testLine) {
+          var success = true;
+          console.log("testing " + inImage.src);
+
+          var tolerance;
+          if (inImage.src.match(/16\.png/)) {
+            tolerance = 2; // phantomjs uses a different scaling method.
+            // In chrome with gamma correction this can be 2.
+          } else {
+            tolerance = 0;
+          }
+
+          if (asyncImage.height === 0 || syncImage.height === 0) {
+            success = false;
+          } else {
+            var equal = imagediff.equal(inImage, asyncImage, tolerance);
+            if (!equal) {
+              success = false;
+            }
+            equal = imagediff.equal(inImage, syncImage, tolerance);
+            if (!equal) {
+              success = false;
             }
           }
-          fnCallback();
-        }, 10);
-      }
-
-      window.isFinished = function () {
-        return testCount && testsDone === testCount;
-      };
-      window.results = [];
-
-      var testLines = document.getElementsByClassName("testline");
-      var testCount = testLines.length,
-        testsDone = 0;
-      for (var i = 0; i < testLines.length; i++) {
-        var testLine = testLines[i];
-        var inImage = testLine.getElementsByClassName("inimage")[0];
-        var asyncImage = testLine.getElementsByClassName("asyncimage")[0];
-        var syncImage = testLine.getElementsByClassName("syncimage")[0];
-        waitForImages(
-          [inImage, asyncImage, syncImage],
-          function (inImage, asyncImage, syncImage, testLine) {
-            var success = true;
-            console.log("testing " + inImage.src);
-
-            var tolerance;
-            if (inImage.src.match(/16\.png/)) {
-              tolerance = 2; // phantomjs uses a different scaling method.
-              // In chrome with gamma correction this can be 2.
-            } else {
-              tolerance = 0;
-            }
-
-            if (asyncImage.height === 0 || syncImage.height === 0) {
-              success = false;
-            } else {
-              var equal = imagediff.equal(inImage, asyncImage, tolerance);
-              if (!equal) {
-                success = false;
-              }
-              equal = imagediff.equal(inImage, syncImage, tolerance);
-              if (!equal) {
-                success = false;
-              }
-            }
-            if (!success) {
-              testLine.className = testLine.className + " failure";
-            } else {
-              testLine.className = testLine.className + " success";
-            }
-            results.push({
-              name: inImage.src.replace(/\.png$/, "").replace(/^.*\//, ""),
-              success: success,
-            });
-            testsDone++;
-          }.bind(null, inImage, asyncImage, syncImage, testLine)
-        );
-      }
+          if (!success) {
+            testLine.className = testLine.className + " failure";
+          } else {
+            testLine.className = testLine.className + " success";
+          }
+          results.push({
+            name: inImage.src.replace(/\.png$/, "").replace(/^.*\//, ""),
+            success: success,
+          });
+          testsDone++;
+        }.bind(null, inImage, asyncImage, syncImage, testLine),
+      );
+    }
     </script>
   </body>
 </html>
