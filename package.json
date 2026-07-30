@@ -64,7 +64,6 @@
   "devDependencies": {
     "@vitest/coverage-v8": "^4.1.10",
     "browserify": "17.0.0",
-    "buffer-equal": "1.0.1",
     "connect": "3.7.0",
     "dprint": "^0.55.2",
     "oxlint": "^1.76.0",
