@@ -33,20 +33,20 @@
   "engines": {
     "node": ">=20"
   },
-  "main": "./lib/png.js",
+  "main": "./src/png.js",
   "directories": {
-    "lib": "lib",
+    "lib": "src",
     "example": "examples",
     "test": "test"
   },
   "files": [
     "browser.js",
-    "lib/"
+    "src/"
   ],
   "scripts": {
     "build": "pnpm prepublish",
     "prepublish": "pnpm browserify",
-    "browserify": "browserify lib/png.js --standalone png > browser.js",
+    "browserify": "browserify src/png.js --standalone png > browser.js",
     "coverage": "vitest run --coverage",
     "test": "pnpm lint && pnpm format:check && vitest run",
     "lint": "oxlint .",
