@@ -7,7 +7,7 @@ if (!zlib.deflateSync) {
   hasSyncZlib = false;
 }
 let SyncReader = require("../io/sync-reader");
-let FilterSync = require("../filter-parse-sync");
+let FilterSync = require("../filters/filter-parse-sync");
 let Parser = require("./parser");
 let bitmapper = require("../bitmap/bitmapper");
 let formatNormaliser = require("../bitmap/format-normaliser");

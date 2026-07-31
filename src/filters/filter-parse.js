@@ -1,6 +1,6 @@
 "use strict";
 
-let interlaceUtils = require("./interlace");
+let interlaceUtils = require("../bitmap/interlace");
 let paethPredictor = require("./paeth-predictor");
 
 function getByteWidth(width, bpp, depth) {

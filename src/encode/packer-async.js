@@ -2,7 +2,7 @@
 
 let util = require("util");
 let Stream = require("stream");
-let constants = require("../constants");
+let constants = require("../shared/constants");
 let Packer = require("./packer");
 
 let PackerAsync = (module.exports = function(opt) {

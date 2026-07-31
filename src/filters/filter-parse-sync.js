@@ -1,6 +1,6 @@
 "use strict";
 
-let SyncReader = require("./sync-reader");
+let SyncReader = require("../io/sync-reader");
 let Filter = require("./filter-parse");
 
 exports.process = function(inBuffer, bitmapInfo) {

@@ -2,8 +2,8 @@
 
 let constants = require("../shared/constants");
 let CrcStream = require("../shared/crc");
-let bitPacker = require("../bitpacker");
-let filter = require("../filter-pack");
+let bitPacker = require("../bitmap/bitpacker");
+let filter = require("../filters/filter-pack");
 let zlib = require("zlib");
 
 let Packer = (module.exports = function(options) {

@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import Stream from "node:stream";
 import { expect, test } from "vitest";
-import { PNG } from "../lib/png.js";
+import { PNG } from "../src/png.js";
 
 function parseFile(filename) {
   return new Promise((resolve, reject) => {

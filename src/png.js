@@ -2,8 +2,8 @@
 
 let util = require("util");
 let Stream = require("stream");
-let Parser = require("./parser-async");
-let Packer = require("./packer-async");
+let Parser = require("./decode/parser-async");
+let Packer = require("./encode/packer-async");
 let PNGSync = require("./png-sync");
 
 let PNG = (exports.PNG = function(options) {

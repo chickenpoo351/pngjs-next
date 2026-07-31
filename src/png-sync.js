@@ -1,7 +1,7 @@
 "use strict";
 
-let parse = require("./parser-sync");
-let pack = require("./packer-sync");
+let parse = require("./decode/parser-sync");
+let pack = require("./encode/packer-sync");
 
 exports.read = function(buffer, options) {
   return parse(buffer, options || {});

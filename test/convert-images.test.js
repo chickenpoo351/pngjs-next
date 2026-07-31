@@ -8,7 +8,7 @@
 // what is happening
 import fs from "node:fs";
 import { describe, expect, test } from "vitest";
-import { PNG } from "../lib/png.js";
+import { PNG } from "../src/png.js";
 
 const inDir = new URL("./in/", import.meta.url);
 const outDir = new URL("./out/", import.meta.url);

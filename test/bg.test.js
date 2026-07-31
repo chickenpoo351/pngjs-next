@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import { expect, test } from "vitest";
-import { PNG } from "../lib/png.js";
+import { PNG } from "../src/png.js";
 
 test("outputs background, created from scratch", async () => {
   const png = new PNG({

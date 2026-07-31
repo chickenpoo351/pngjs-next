@@ -2,7 +2,7 @@
 
 let util = require("util");
 let ChunkStream = require("../io/chunkstream");
-let Filter = require("../filter-parse");
+let Filter = require("./filter-parse");
 
 let FilterAsync = (module.exports = function(bitmapInfo) {
   ChunkStream.call(this);
