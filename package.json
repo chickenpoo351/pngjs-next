@@ -51,7 +51,8 @@
     "test": "pnpm lint && pnpm format:check && vitest run",
     "lint": "oxlint .",
     "format": "dprint fmt",
-    "format:check": "dprint check"
+    "format:check": "dprint check",
+    "code-check": "pnpm lint && pnpm format"
   },
   "repository": {
     "type": "git",
