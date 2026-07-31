@@ -2,11 +2,11 @@
 
 let util = require("util");
 let zlib = require("zlib");
-let ChunkStream = require("./chunkstream");
-let FilterAsync = require("./filter-parse-async");
+let ChunkStream = require("../chunkstream");
+let FilterAsync = require("../filter-parse-async");
 let Parser = require("./parser");
-let bitmapper = require("./bitmapper");
-let formatNormaliser = require("./format-normaliser");
+let bitmapper = require("../bitmapper");
+let formatNormaliser = require("../format-normaliser");
 
 let ParserAsync = (module.exports = function(options) {
   ChunkStream.call(this);

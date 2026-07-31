@@ -1,9 +1,9 @@
 "use strict";
 
-let constants = require("./constants");
-let CrcStream = require("./crc");
-let bitPacker = require("./bitpacker");
-let filter = require("./filter-pack");
+let constants = require("../shared/constants");
+let CrcStream = require("../shared/crc");
+let bitPacker = require("../bitpacker");
+let filter = require("../filter-pack");
 let zlib = require("zlib");
 
 let Packer = (module.exports = function(options) {

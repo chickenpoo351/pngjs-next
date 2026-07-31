@@ -1,7 +1,7 @@
 "use strict";
 
-let constants = require("./constants");
-let CrcCalculator = require("./crc");
+let constants = require("../shared/constants");
+let CrcCalculator = require("../shared/crc");
 
 let Parser = (module.exports = function(options, dependencies) {
   this._options = options;

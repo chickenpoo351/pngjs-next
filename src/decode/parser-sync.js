@@ -2,15 +2,15 @@
 
 let hasSyncZlib = true;
 let zlib = require("zlib");
-let inflateSync = require("./sync-inflate");
+let inflateSync = require("../io/sync-inflate");
 if (!zlib.deflateSync) {
   hasSyncZlib = false;
 }
-let SyncReader = require("./sync-reader");
-let FilterSync = require("./filter-parse-sync");
+let SyncReader = require("../io/sync-reader");
+let FilterSync = require("../filter-parse-sync");
 let Parser = require("./parser");
-let bitmapper = require("./bitmapper");
-let formatNormaliser = require("./format-normaliser");
+let bitmapper = require("../bitmap/bitmapper");
+let formatNormaliser = require("../bitmap/format-normaliser");
 
 module.exports = function(buffer, options) {
   if (!hasSyncZlib) {

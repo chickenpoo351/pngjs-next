@@ -5,7 +5,7 @@ let zlib = require("zlib");
 if (!zlib.deflateSync) {
   hasSyncZlib = false;
 }
-let constants = require("./constants");
+let constants = require("../constants");
 let Packer = require("./packer");
 
 module.exports = function(metaData, opt) {
