@@ -29,7 +29,8 @@ function parseBuffer(buffer) {
 }
 
 function getPixel(png, x, y) {
-  return png.data.readUInt32BE((x + y * png.width) * 4);
+  const data = Buffer.from(png.data.buffer, png.data.byteOffset, png.data.byteLength);
+  return data.readUInt32BE((x + y * png.width) * 4);
 }
 
 test("should correctly parse a 1-bit colormap png", async () => {
