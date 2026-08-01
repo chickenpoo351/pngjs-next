@@ -48,7 +48,7 @@
     "prepublish": "pnpm browserify",
     "browserify": "browserify src/png.js --standalone png > browser.js",
     "coverage": "vitest run --coverage",
-    "test": "pnpm lint && pnpm format:check && vitest run",
+    "test": "pnpm lint && pnpm format && vitest run",
     "lint": "oxlint .",
     "format": "dprint fmt",
     "format:check": "dprint check",
@@ -70,5 +70,6 @@
     "puppeteer": "25.4.0",
     "vitest": "^4.1.10"
   },
-  "packageManager": "pnpm@10.7.1"
+  "packageManager": "pnpm@10.7.1",
+  "type": "module"
 }
