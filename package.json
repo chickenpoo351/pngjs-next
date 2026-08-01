@@ -68,6 +68,7 @@
     "dprint": "^0.55.2",
     "oxlint": "^1.76.0",
     "puppeteer": "25.4.0",
+    "vite": "^8.2.0",
     "vitest": "^4.1.10"
   },
   "packageManager": "pnpm@10.7.1",
