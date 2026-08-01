@@ -1,12 +1,10 @@
-"use strict";
+import { parse } from "./decode/parser-sync.js";
+import { pack } from "./encode/packer-sync.js";
 
-let parse = require("./decode/parser-sync");
-let pack = require("./encode/packer-sync");
-
-exports.read = function(buffer, options) {
+export function read(buffer, options) {
   return parse(buffer, options || {});
-};
+}
 
-exports.write = function(png, options) {
+export function write(png, options) {
   return pack(png, options);
-};
+}

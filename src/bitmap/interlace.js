@@ -11,7 +11,7 @@
 // 6 5 6 5 6 5 6 5 6
 // 7 7 7 7 7 7 7 7 7
 
-let imagePasses = [
+const imagePasses = [
   {
     // pass 1 - 1px
     x: [0],
@@ -49,7 +49,7 @@ let imagePasses = [
   },
 ];
 
-exports.getImagePasses = function(width, height) {
+export function getImagePasses(width, height) {
   let images = [];
   let xLeftOver = width % 8;
   let yLeftOver = height % 8;
@@ -78,9 +78,9 @@ exports.getImagePasses = function(width, height) {
     }
   }
   return images;
-};
+}
 
-exports.getInterlaceIterator = function(width) {
+export function getInterlaceIterator(width) {
   return function(x, y, pass) {
     let outerXLeftOver = x % imagePasses[pass].x.length;
     let outerX = ((x - outerXLeftOver) / imagePasses[pass].x.length) * 8
@@ -90,4 +90,4 @@ exports.getInterlaceIterator = function(width) {
       + imagePasses[pass].y[outerYLeftOver];
     return outerX * 4 + outerY * width * 4;
   };
-};
+}

@@ -1,11 +1,9 @@
-"use strict";
+import Stream from "node:stream";
+import util from "node:util";
+import constants from "../shared/constants.js";
+import Packer from "./packer.js";
 
-let util = require("util");
-let Stream = require("stream");
-let constants = require("../shared/constants");
-let Packer = require("./packer");
-
-let PackerAsync = (module.exports = function(opt) {
+function PackerAsync(opt) {
   Stream.call(this);
 
   let options = opt || {};
@@ -14,7 +12,7 @@ let PackerAsync = (module.exports = function(opt) {
   this._deflate = this._packer.createDeflate();
 
   this.readable = true;
-});
+}
 util.inherits(PackerAsync, Stream);
 
 PackerAsync.prototype.pack = function(data, width, height, gamma) {
@@ -45,6 +43,7 @@ PackerAsync.prototype.pack = function(data, width, height, gamma) {
       this.emit("end");
     }.bind(this),
   );
-
   this._deflate.end(filteredData);
 };
+
+export default PackerAsync;

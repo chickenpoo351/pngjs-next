@@ -1,7 +1,5 @@
-"use strict";
-
-let interlaceUtils = require("../bitmap/interlace");
-let paethPredictor = require("./paeth-predictor");
+import { getImagePasses } from "../bitmap/interlace.js";
+import { paethPredictor } from "./paeth-predictor.js";
 
 function getByteWidth(width, bpp, depth) {
   let byteWidth = width * bpp;
@@ -11,7 +9,7 @@ function getByteWidth(width, bpp, depth) {
   return byteWidth;
 }
 
-let Filter = (module.exports = function(bitmapInfo, dependencies) {
+function Filter(bitmapInfo, dependencies) {
   let width = bitmapInfo.width;
   let height = bitmapInfo.height;
   let interlace = bitmapInfo.interlace;
@@ -25,7 +23,7 @@ let Filter = (module.exports = function(bitmapInfo, dependencies) {
   this._imageIndex = 0;
   this._images = [];
   if (interlace) {
-    let passes = interlaceUtils.getImagePasses(width, height);
+    let passes = getImagePasses(width, height);
     for (let i = 0; i < passes.length; i++) {
       this._images.push({
         byteWidth: getByteWidth(passes[i].width, bpp, depth),
@@ -52,7 +50,7 @@ let Filter = (module.exports = function(bitmapInfo, dependencies) {
   } else {
     this._xComparison = 1;
   }
-});
+}
 
 Filter.prototype.start = function() {
   this.read(
@@ -175,3 +173,5 @@ Filter.prototype._reverseFilterLine = function(rawData) {
     this.complete();
   }
 };
+
+export default Filter;

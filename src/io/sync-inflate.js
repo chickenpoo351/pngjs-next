@@ -1,10 +1,7 @@
-"use strict";
-
-let assert = require("assert").ok;
-let zlib = require("zlib");
-let util = require("util");
-
-let kMaxLength = require("buffer").kMaxLength;
+import assert from "node:assert";
+import { kMaxLength } from "node:buffer";
+import util from "node:util";
+import zlib from "node:zlib";
 
 function Inflate(opts) {
   if (!(this instanceof Inflate)) {
@@ -70,7 +67,7 @@ Inflate.prototype._processChunk = function(chunk, flushFlag, asyncCb) {
     }
 
     let have = availOutBefore - availOutAfter;
-    assert(have >= 0, "have should not go down");
+    assert.ok(have >= 0, "have should not go down");
 
     if (have > 0) {
       let out = self._buffer.slice(self._offset, self._offset + have);
@@ -105,7 +102,7 @@ Inflate.prototype._processChunk = function(chunk, flushFlag, asyncCb) {
     return false;
   }
 
-  assert(this._handle, "zlib binding closed");
+  assert.ok(this._handle, "zlib binding closed");
   let res;
   do {
     res = this._handle.writeSync(
@@ -162,7 +159,6 @@ function inflateSync(buffer, opts) {
   return zlibBufferSync(new Inflate(opts), buffer);
 }
 
-module.exports = exports = inflateSync;
-exports.Inflate = Inflate;
-exports.createInflate = createInflate;
-exports.inflateSync = inflateSync;
+export default inflateSync;
+
+export { createInflate, Inflate, inflateSync };

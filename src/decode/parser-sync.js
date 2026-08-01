@@ -1,18 +1,17 @@
-"use strict";
+import zlib from "node:zlib";
+import { dataToBitMap } from "../bitmap/bitmapper.js";
+import { formatNormaliser } from "../bitmap/format-normaliser.js";
+import { process } from "../filters/filter-parse-sync.js";
+import { inflateSync } from "../io/sync-inflate.js";
+import SyncReader from "../io/sync-reader.js";
+import Parser from "./parser.js";
 
 let hasSyncZlib = true;
-let zlib = require("zlib");
-let inflateSync = require("../io/sync-inflate");
 if (!zlib.deflateSync) {
-  hasSyncZlib = false;
+  hasSyncZlib = false; // pretty sure this is redundant now :p probably was only needed to see if people on older versions of node had access to this... but in any remotely modern version of node this always exists
 }
-let SyncReader = require("../io/sync-reader");
-let FilterSync = require("../filters/filter-parse-sync");
-let Parser = require("./parser");
-let bitmapper = require("../bitmap/bitmapper");
-let formatNormaliser = require("../bitmap/format-normaliser");
 
-module.exports = function(buffer, options) {
+export function parse(buffer, options) {
   if (!hasSyncZlib) {
     throw new Error(
       "To use the sync capability of this library in old node versions, please pin pngjs to v2.3.0",
@@ -92,10 +91,10 @@ module.exports = function(buffer, options) {
     throw new Error("bad png - invalid inflate data response");
   }
 
-  let unfilteredData = FilterSync.process(inflatedData, metaData);
+  let unfilteredData = process(inflatedData, metaData);
   inflateData = null;
 
-  let bitmapData = bitmapper.dataToBitMap(unfilteredData, metaData);
+  let bitmapData = dataToBitMap(unfilteredData, metaData);
   unfilteredData = null;
 
   let normalisedBitmapData = formatNormaliser(
@@ -108,4 +107,4 @@ module.exports = function(buffer, options) {
   metaData.gamma = gamma || 0;
 
   return metaData;
-};
+}

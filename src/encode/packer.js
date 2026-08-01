@@ -1,12 +1,10 @@
-"use strict";
+import zlib from "node:zlib";
+import { bitPacker } from "../bitmap/bitpacker.js";
+import { filter } from "../filters/filter-pack.js";
+import constants from "../shared/constants.js";
+import CrcCalculator from "../shared/crc.js";
 
-let constants = require("../shared/constants");
-let CrcStream = require("../shared/crc");
-let bitPacker = require("../bitmap/bitpacker");
-let filter = require("../filters/filter-pack");
-let zlib = require("zlib");
-
-let Packer = (module.exports = function(options) {
+function Packer(options) {
   this._options = options;
 
   options.deflateChunkSize = options.deflateChunkSize || 32 * 1024;
@@ -54,7 +52,7 @@ let Packer = (module.exports = function(options) {
       "option bit depth:" + options.bitDepth + " is not supported at present",
     );
   }
-});
+}
 
 Packer.prototype.getDeflateOptions = function() {
   return {
@@ -90,7 +88,7 @@ Packer.prototype._packChunk = function(type, data) {
   }
 
   buf.writeInt32BE(
-    CrcStream.crc32(buf.slice(4, buf.length - 4)),
+    CrcCalculator.crc32(buf.slice(4, buf.length - 4)),
     buf.length - 4,
   );
   return buf;
@@ -122,3 +120,5 @@ Packer.prototype.packIDAT = function(data) {
 Packer.prototype.packIEND = function() {
   return this._packChunk(constants.TYPE_IEND, null);
 };
+
+export default Packer;

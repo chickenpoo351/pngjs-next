@@ -1,10 +1,8 @@
-"use strict";
+import util from "node:util";
+import ChunkStream from "../io/chunkstream.js";
+import Filter from "./filter-parse.js";
 
-let util = require("util");
-let ChunkStream = require("../io/chunkstream");
-let Filter = require("./filter-parse");
-
-let FilterAsync = (module.exports = function(bitmapInfo) {
+function FilterAsync(bitmapInfo) { // this codebase is so weird... nonetheless I am going to come back and fix all of this weird stuff up but for now we just need to get this into ESM :p
   ChunkStream.call(this);
 
   let buffers = [];
@@ -20,5 +18,7 @@ let FilterAsync = (module.exports = function(bitmapInfo) {
   });
 
   this._filter.start();
-});
+}
 util.inherits(FilterAsync, ChunkStream);
+
+export default FilterAsync;

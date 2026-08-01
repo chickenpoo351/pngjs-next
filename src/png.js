@@ -1,12 +1,10 @@
-"use strict";
+import Stream from "node:stream";
+import util from "node:util";
+import ParserAsync from "./decode/parser-async.js";
+import PackerAsync from "./encode/packer-async.js";
+import { read, write } from "./png-sync.js";
 
-let util = require("util");
-let Stream = require("stream");
-let Parser = require("./decode/parser-async");
-let Packer = require("./encode/packer-async");
-let PNGSync = require("./png-sync");
-
-let PNG = (exports.PNG = function(options) {
+const PNG = function(options) {
   Stream.call(this);
 
   options = options || {}; // eslint-disable-line no-param-reassign
@@ -26,7 +24,7 @@ let PNG = (exports.PNG = function(options) {
   this.gamma = 0;
   this.readable = this.writable = true;
 
-  this._parser = new Parser(options);
+  this._parser = new ParserAsync(options);
 
   this._parser.on("error", this.emit.bind(this, "error"));
   this._parser.on("close", this._handleClose.bind(this));
@@ -40,15 +38,18 @@ let PNG = (exports.PNG = function(options) {
     }.bind(this),
   );
 
-  this._packer = new Packer(options);
+  this._packer = new PackerAsync(options);
   this._packer.on("data", this.emit.bind(this, "data"));
   this._packer.on("end", this.emit.bind(this, "end"));
   this._parser.on("close", this._handleClose.bind(this));
   this._packer.on("error", this.emit.bind(this, "error"));
-});
+};
 util.inherits(PNG, Stream);
 
-PNG.sync = PNGSync;
+PNG.sync = {
+  read,
+  write,
+};
 
 PNG.prototype.pack = function() {
   if (!this.data || !this.data.length) {
@@ -56,11 +57,9 @@ PNG.prototype.pack = function() {
     return this;
   }
 
-  process.nextTick(
-    function() {
-      this._packer.pack(this.data, this.width, this.height, this.gamma);
-    }.bind(this),
-  );
+  process.nextTick(() => {
+    this._packer.pack(this.data, this.width, this.height, this.gamma);
+  });
 
   return this;
 };
@@ -191,3 +190,5 @@ PNG.adjustGamma = function(src) {
 PNG.prototype.adjustGamma = function() {
   PNG.adjustGamma(this);
 };
+
+export { PNG };

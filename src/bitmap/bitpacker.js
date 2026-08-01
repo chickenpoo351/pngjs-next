@@ -1,8 +1,6 @@
-"use strict";
+import constants from "../shared/constants.js";
 
-let constants = require("../shared/constants");
-
-module.exports = function(dataIn, width, height, options) {
+export function bitPacker(dataIn, width, height, options) {
   let outHasAlpha = [constants.COLORTYPE_COLOR_ALPHA, constants.COLORTYPE_ALPHA].indexOf(
     options.colorType,
   ) !== -1;
@@ -154,4 +152,4 @@ module.exports = function(dataIn, width, height, options) {
   }
 
   return outData;
-};
+}

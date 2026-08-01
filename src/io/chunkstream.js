@@ -1,9 +1,7 @@
-"use strict";
+import Stream from "node:stream";
+import util from "node:util";
 
-let util = require("util");
-let Stream = require("stream");
-
-let ChunkStream = (module.exports = function() {
+function ChunkStream() {
   Stream.call(this);
 
   this._buffers = [];
@@ -14,7 +12,7 @@ let ChunkStream = (module.exports = function() {
 
   this._encoding = "utf8";
   this.writable = true;
-});
+}
 util.inherits(ChunkStream, Stream);
 
 ChunkStream.prototype.read = function(length, callback) {
@@ -187,3 +185,5 @@ ChunkStream.prototype._process = function() {
     this.emit("error", ex);
   }
 };
+
+export default ChunkStream;

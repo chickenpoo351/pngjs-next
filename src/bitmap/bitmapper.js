@@ -1,6 +1,4 @@
-"use strict";
-
-let interlaceUtils = require("./interlace");
+import { getImagePasses, getInterlaceIterator } from "./interlace.js";
 
 let pixelBppMapper = [
   // 0 - dummy entry
@@ -199,7 +197,7 @@ function mapImageCustomBit(image, pxData, getPxPos, bpp, bits, maxBit) {
   }
 }
 
-exports.dataToBitMap = function(data, bitmapInfo) {
+export function dataToBitMap(data, bitmapInfo) {
   let width = bitmapInfo.width;
   let height = bitmapInfo.height;
   let depth = bitmapInfo.depth;
@@ -222,8 +220,8 @@ exports.dataToBitMap = function(data, bitmapInfo) {
   let getPxPos;
 
   if (interlace) {
-    images = interlaceUtils.getImagePasses(width, height);
-    getPxPos = interlaceUtils.getInterlaceIterator(width, height);
+    images = getImagePasses(width, height);
+    getPxPos = getInterlaceIterator(width, height);
   } else {
     let nonInterlacedPxPos = 0;
     getPxPos = function() {
@@ -264,4 +262,4 @@ exports.dataToBitMap = function(data, bitmapInfo) {
   }
 
   return pxData;
-};
+}

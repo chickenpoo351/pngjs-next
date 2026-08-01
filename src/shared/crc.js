@@ -1,24 +1,20 @@
-"use strict";
+const crcTable = [];
 
-let crcTable = [];
-
-(function() {
-  for (let i = 0; i < 256; i++) {
-    let currentCrc = i;
-    for (let j = 0; j < 8; j++) {
-      if (currentCrc & 1) {
-        currentCrc = 0xedb88320 ^ (currentCrc >>> 1);
-      } else {
-        currentCrc = currentCrc >>> 1;
-      }
+for (let i = 0; i < 256; i++) {
+  let currentCrc = i;
+  for (let j = 0; j < 8; j++) {
+    if (currentCrc & 1) {
+      currentCrc = 0xedb88320 ^ (currentCrc >>> 1);
+    } else {
+      currentCrc = currentCrc >>> 1;
     }
-    crcTable[i] = currentCrc;
   }
-})();
+  crcTable[i] = currentCrc;
+}
 
-let CrcCalculator = (module.exports = function() {
+function CrcCalculator() {
   this._crc = -1;
-});
+}
 
 CrcCalculator.prototype.write = function(data) {
   for (let i = 0; i < data.length; i++) {
@@ -38,3 +34,5 @@ CrcCalculator.crc32 = function(buf) {
   }
   return crc ^ -1;
 };
+
+export default CrcCalculator;

@@ -63,7 +63,7 @@ function scaleDepth(indata, outdata, width, height, depth) {
   }
 }
 
-module.exports = function(indata, imageData, skipRescale = false) {
+export function formatNormaliser(indata, imageData, skipRescale = false) {
   let depth = imageData.depth;
   let width = imageData.width;
   let height = imageData.height;
@@ -90,4 +90,4 @@ module.exports = function(indata, imageData, skipRescale = false) {
     }
   }
   return outdata;
-};
+}

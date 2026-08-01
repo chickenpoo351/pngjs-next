@@ -1,9 +1,7 @@
-"use strict";
+import constants from "../shared/constants.js";
+import CrcCalculator from "../shared/crc.js";
 
-let constants = require("../shared/constants");
-let CrcCalculator = require("../shared/crc");
-
-let Parser = (module.exports = function(options, dependencies) {
+function Parser(options, dependencies) {
   this._options = options;
   options.checkCRC = options.checkCRC !== false;
 
@@ -34,7 +32,7 @@ let Parser = (module.exports = function(options, dependencies) {
   this.finished = dependencies.finished;
   this.simpleTransparency = dependencies.simpleTransparency;
   this.headersFinished = dependencies.headersFinished || function() {};
-});
+}
 
 Parser.prototype.start = function() {
   this.read(constants.PNG_SIGNATURE.length, this._parseSignature.bind(this));
@@ -293,3 +291,5 @@ Parser.prototype._parseIEND = function(data) {
     this.finished();
   }
 };
+
+export default Parser;

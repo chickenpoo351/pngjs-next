@@ -1,14 +1,12 @@
-"use strict";
+import util from "node:util";
+import zlib from "node:zlib";
+import { dataToBitMap } from "../bitmap/bitmapper.js";
+import { formatNormaliser } from "../bitmap/format-normaliser.js";
+import FilterAsync from "../filters/filter-parse-async.js";
+import ChunkStream from "../io/chunkstream.js";
+import Parser from "./parser.js";
 
-let util = require("util");
-let zlib = require("zlib");
-let ChunkStream = require("../io/chunkstream");
-let FilterAsync = require("../filters/filter-parse-async");
-let Parser = require("./parser");
-let bitmapper = require("../bitmap/bitmapper");
-let formatNormaliser = require("../bitmap/format-normaliser");
-
-let ParserAsync = (module.exports = function(options) {
+function ParserAsync(options) {
   ChunkStream.call(this);
 
   this._parser = new Parser(options, {
@@ -27,7 +25,7 @@ let ParserAsync = (module.exports = function(options) {
   this.writable = true;
 
   this._parser.start();
-});
+}
 util.inherits(ParserAsync, ChunkStream);
 
 ParserAsync.prototype._handleError = function(err) {
@@ -151,7 +149,7 @@ ParserAsync.prototype._complete = function(filteredData) {
   let normalisedBitmapData;
 
   try {
-    let bitmapData = bitmapper.dataToBitMap(filteredData, this._bitmapInfo);
+    let bitmapData = dataToBitMap(filteredData, this._bitmapInfo);
 
     normalisedBitmapData = formatNormaliser(
       bitmapData,
@@ -166,3 +164,5 @@ ParserAsync.prototype._complete = function(filteredData) {
 
   this.emit("parsed", normalisedBitmapData);
 };
+
+export default ParserAsync;

@@ -1,14 +1,12 @@
-"use strict";
-
+import zlib from "node:zlib";
+import constants from "../shared/constants.js";
+import Packer from "./packer.js";
 let hasSyncZlib = true;
-let zlib = require("zlib");
 if (!zlib.deflateSync) {
   hasSyncZlib = false;
 }
-let constants = require("../shared/constants");
-let Packer = require("./packer");
 
-module.exports = function(metaData, opt) {
+export function pack(metaData, opt) {
   if (!hasSyncZlib) {
     throw new Error(
       "To use the sync capability of this library in old node versions, please pin pngjs to v2.3.0",
@@ -53,4 +51,4 @@ module.exports = function(metaData, opt) {
   chunks.push(packer.packIEND());
 
   return Buffer.concat(chunks);
-};
+}
