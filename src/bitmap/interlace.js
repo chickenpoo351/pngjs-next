@@ -1,5 +1,3 @@
-"use strict";
-
 // Adam 7
 //   0 1 2 3 4 5 6 7
 // 0 x 6 4 6 x 6 4 6
@@ -50,24 +48,24 @@ const imagePasses = [
 ];
 
 export function getImagePasses(width, height) {
-  let images = [];
-  let xLeftOver = width % 8;
-  let yLeftOver = height % 8;
-  let xRepeats = (width - xLeftOver) / 8;
-  let yRepeats = (height - yLeftOver) / 8;
+  const images = [];
+  const xLeftOver = width % 8;
+  const yLeftOver = height % 8;
+  const xRepeats = (width - xLeftOver) / 8;
+  const yRepeats = (height - yLeftOver) / 8;
   for (let i = 0; i < imagePasses.length; i++) {
-    let pass = imagePasses[i];
-    let passWidth = xRepeats * pass.x.length;
-    let passHeight = yRepeats * pass.y.length;
-    for (let j = 0; j < pass.x.length; j++) {
-      if (pass.x[j] < xLeftOver) {
+    const { x, y } = imagePasses[i];
+    let passWidth = xRepeats * x.length;
+    let passHeight = yRepeats * y.length;
+    for (let j = 0; j < x.length; j++) {
+      if (x[j] < xLeftOver) {
         passWidth++;
       } else {
         break;
       }
     }
-    for (let j = 0; j < pass.y.length; j++) {
-      if (pass.y[j] < yLeftOver) {
+    for (let j = 0; j < y.length; j++) {
+      if (y[j] < yLeftOver) {
         passHeight++;
       } else {
         break;
@@ -82,12 +80,12 @@ export function getImagePasses(width, height) {
 
 export function getInterlaceIterator(width) {
   return function(x, y, pass) {
-    let outerXLeftOver = x % imagePasses[pass].x.length;
-    let outerX = ((x - outerXLeftOver) / imagePasses[pass].x.length) * 8
-      + imagePasses[pass].x[outerXLeftOver];
-    let outerYLeftOver = y % imagePasses[pass].y.length;
-    let outerY = ((y - outerYLeftOver) / imagePasses[pass].y.length) * 8
-      + imagePasses[pass].y[outerYLeftOver];
-    return outerX * 4 + outerY * width * 4;
+    const { x: passX, y: passY } = imagePasses[pass];
+    const xOffset = x % passX.length;
+    const yOffset = y % passY.length;
+    const outerX = Math.floor(x / passX.length) * 8 + passX[xOffset];
+    const outerY = Math.floor(y / passY.length) * 8 + passY[yOffset];
+
+    return (outerY * width + outerX) * 4;
   };
 }
