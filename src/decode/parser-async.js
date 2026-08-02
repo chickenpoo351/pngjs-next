@@ -1,9 +1,9 @@
 import util from "node:util";
-import zlib from "node:zlib";
 import { dataToBitMap } from "../bitmap/bitmapper.js";
 import { formatNormaliser } from "../bitmap/format-normaliser.js";
 import FilterAsync from "../filters/filter-parse-async.js";
 import ChunkStream from "../io/chunkstream.js";
+import { Z_MIN_CHUNK, ZCreateInflate } from "../platform/node/compression.js";
 import Parser from "./parser.js";
 
 function ParserAsync(options) {
@@ -53,7 +53,7 @@ ParserAsync.prototype._handleError = function(err) {
 ParserAsync.prototype._inflateData = function(data) {
   if (!this._inflate) {
     if (this._bitmapInfo.interlace) {
-      this._inflate = zlib.createInflate();
+      this._inflate = ZCreateInflate();
 
       this._inflate.on("error", this.emit.bind(this, "error"));
       this._filter.on("complete", this._complete.bind(this));
@@ -67,9 +67,9 @@ ParserAsync.prototype._inflateData = function(data) {
         >> 3)
         + 1;
       let imageSize = rowSize * this._bitmapInfo.height;
-      let chunkSize = Math.max(imageSize, zlib.Z_MIN_CHUNK);
+      let chunkSize = Math.max(imageSize, Z_MIN_CHUNK);
 
-      this._inflate = zlib.createInflate({ chunkSize: chunkSize });
+      this._inflate = ZCreateInflate({ chunkSize: chunkSize });
       let leftToInflate = imageSize;
 
       let emitError = this.emit.bind(this, "error");

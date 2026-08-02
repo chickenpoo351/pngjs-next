@@ -1,13 +1,13 @@
-import zlib from "node:zlib";
 import { dataToBitMap } from "../bitmap/bitmapper.js";
 import { formatNormaliser } from "../bitmap/format-normaliser.js";
 import { process } from "../filters/filter-parse-sync.js";
 import { inflateSync } from "../io/sync-inflate.js";
 import SyncReader from "../io/sync-reader.js";
+import { ZDeflateSync, ZInflateSync } from "../platform/node/compression.js";
 import Parser from "./parser.js";
 
 let hasSyncZlib = true;
-if (!zlib.deflateSync) {
+if (!ZDeflateSync) {
   hasSyncZlib = false; // pretty sure this is redundant now :p probably was only needed to see if people on older versions of node had access to this... but in any remotely modern version of node this always exists
 }
 
@@ -76,7 +76,7 @@ export function parse(buffer, options) {
 
   let inflatedData;
   if (metaData.interlace) {
-    inflatedData = zlib.inflateSync(inflateData);
+    inflatedData = ZInflateSync(inflateData);
   } else {
     let rowSize = ((metaData.width * metaData.bpp * metaData.depth + 7) >> 3) + 1;
     let imageSize = rowSize * metaData.height;

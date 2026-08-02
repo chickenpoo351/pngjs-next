@@ -1,8 +1,8 @@
-import zlib from "node:zlib";
+import { ZDeflateSync } from "../platform/node/compression.js";
 import constants from "../shared/constants.js";
 import Packer from "./packer.js";
 let hasSyncZlib = true;
-if (!zlib.deflateSync) {
+if (!ZDeflateSync) {
   hasSyncZlib = false;
 }
 
@@ -36,7 +36,7 @@ export function pack(metaData, opt) {
   );
 
   // compress it
-  let compressedData = zlib.deflateSync(
+  let compressedData = ZDeflateSync(
     filteredData,
     packer.getDeflateOptions(),
   );

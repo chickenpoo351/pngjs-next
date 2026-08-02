@@ -1,6 +1,6 @@
-import zlib from "node:zlib";
 import { bitPacker } from "../bitmap/bitpacker.js";
 import { filter } from "../filters/filter-pack.js";
+import { ZCreateDeflate } from "../platform/node/compression.js";
 import constants from "../shared/constants.js";
 import CrcCalculator from "../shared/crc.js";
 
@@ -11,7 +11,7 @@ function Packer(options) {
   options.deflateLevel = options.deflateLevel != null ? options.deflateLevel : 9;
   options.deflateStrategy = options.deflateStrategy != null ? options.deflateStrategy : 3;
   options.inputHasAlpha = options.inputHasAlpha != null ? options.inputHasAlpha : true;
-  options.deflateFactory = options.deflateFactory || zlib.createDeflate;
+  options.deflateFactory = options.deflateFactory || ZCreateDeflate;
   options.bitDepth = options.bitDepth || 8;
   // This is outputColorType
   options.colorType = typeof options.colorType === "number"

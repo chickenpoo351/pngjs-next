@@ -1,18 +1,18 @@
 import assert from "node:assert";
 import { kMaxLength } from "node:buffer";
 import util from "node:util";
-import zlib from "node:zlib";
+import { Z_FINISH, Z_MIN_CHUNK, ZInflate } from "../platform/node/compression";
 
 function Inflate(opts) {
   if (!(this instanceof Inflate)) {
     return new Inflate(opts);
   }
 
-  if (opts && opts.chunkSize < zlib.Z_MIN_CHUNK) {
-    opts.chunkSize = zlib.Z_MIN_CHUNK;
+  if (opts && opts.chunkSize < Z_MIN_CHUNK) {
+    opts.chunkSize = Z_MIN_CHUNK;
   }
 
-  zlib.Inflate.call(this, opts);
+  ZInflate.call(this, opts);
 
   // Node 8 --> 9 compatibility check
   this._offset = this._offset === undefined ? this._outOffset : this._offset;
@@ -43,7 +43,7 @@ function _close(engine, callback) {
 
 Inflate.prototype._processChunk = function(chunk, flushFlag, asyncCb) {
   if (typeof asyncCb === "function") {
-    return zlib.Inflate._processChunk.call(this, chunk, flushFlag, asyncCb);
+    return ZInflate._processChunk.call(this, chunk, flushFlag, asyncCb);
   }
 
   let self = this;
@@ -137,7 +137,7 @@ Inflate.prototype._processChunk = function(chunk, flushFlag, asyncCb) {
   return buf;
 };
 
-util.inherits(Inflate, zlib.Inflate);
+util.inherits(Inflate, ZInflate);
 
 function zlibBufferSync(engine, buffer) {
   if (typeof buffer === "string") {
@@ -149,7 +149,7 @@ function zlibBufferSync(engine, buffer) {
 
   let flushFlag = engine._finishFlushFlag;
   if (flushFlag == null) {
-    flushFlag = zlib.Z_FINISH;
+    flushFlag = Z_FINISH;
   }
 
   return engine._processChunk(buffer, flushFlag);
